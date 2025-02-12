@@ -1,0 +1,23 @@
+
+.container {
+    background-color: beige;
+    border: 2px solid peru;
+    width: 25%;
+}
+
+.field {
+    margin: 5px;
+    background-color: rgba(11, 11, 11,0.7);
+    color:yellow;
+    padding: 5px;
+    border-radius: 10px;
+}
+
+#fname {
+    color:whte;
+}
+
+label {
+    color: white;
+    padding: 0 5px 0 10px;
+}
