@@ -2,7 +2,12 @@
 .container {
     background-color: beige;
     border: 2px solid peru;
-    width: 25%;
+    border-radius: 20px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    box-sizing: border-box;
 }
 
 .field {
@@ -11,13 +16,24 @@
     color:yellow;
     padding: 5px;
     border-radius: 10px;
+    display:flex;
+    flex-direction: row;
 }
 
 #fname {
     color:whte;
+    display: flex;
 }
 
 label {
     color: white;
     padding: 0 5px 0 10px;
+    width: 30%;
+    display: flex;
+}
+
+textarea {
+    box-sizing: border-box;
+    max-width: 70%;
+    overflow-y: scroll;
 }

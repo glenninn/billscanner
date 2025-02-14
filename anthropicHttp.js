@@ -1,15 +1,7 @@
 // const Anthropic= require("@anthropic-ai/sdk");
-// please provide just a json object with the extracted fields and values
-// Available models and their characteristics
-const CLAUDE_MODELS = {
-  OPUS: "claude-3-opus-20240229",    // Most capable, best for complex tasks
-  SONNET: "claude-3-5-sonnet-20240620", // Good balance of speed and capability
-  HAIKU: "claude-3-haiku-20240307"    // Fastest, best for simple tasks
-};
 const claudeModel = require("./claudeModel.js");
 
 async function sendChatMessage() {
-
 }
 
 async function submitImageToAnthropic(imagePath, apiKey, question = "What's in this image?") {

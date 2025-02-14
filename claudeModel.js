@@ -7,7 +7,7 @@ const CLAUDE_MODELS = {
   HAIKU: "claude-3-haiku-20240307"    // Fastest, best for simple tasks
 };
 
-const selectMode= process.env.ANTHROPIC_CLAUDE_MODEL || "OPUS";
+const selectMode= process.env.ANTHROPIC_CLAUDE_MODEL || "SONNET";
 const claudeModel = CLAUDE_MODELS[selectMode];
 
 module.exports = claudeModel;

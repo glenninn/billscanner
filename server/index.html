@@ -1,10 +1,12 @@
+<!DOCTYPE html>
 <html>
     <head>
-        <title>Test Page</title>
-        <link rel="stylesheet" href="./styles.css"
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>Anthropic</title>
+        <link rel="stylesheet" href="./styles.css">
     </head>
     <body>
-        <h2>Test Page</h2>
+        <h2>Claude-AI from Anthropic</h2>
         <div class="container">
             <form action="/submit" enctype="multipart/form-data" method="post">
                 <div class="field">
@@ -12,8 +14,19 @@
                     <input type="file" id="fname" name="invoice">
                 </div>
                 <div class="field">
+                    <label for="imageQuestion">Question for Claude-AI</label>
+                    <textarea name="imageQuestion" cols="64" rows="15">
+If this image is an invoice, statement, or form related to finances, please return a json object only, with no other narrative,that includes:
+- "organization",  that has the name of the organization. If not clearly evident, it usually can be inferred from "pay to the order" field
+- "finalAmount", a number that is the final amount due for this invoice.
+- "formType", a string describing the type of statement,
+- all the extracted fields and values
+For any other image please return a json object with one property, "narrative" the describes the image.
+                    </textarea>
+                </div>
+                <div class="field">
                     <label for="submit">Analyze</label>
-                    <input type="submit" name="submit"/>
+                    <input type="submit" name="submit" value="Send to Claude"/>
                 </div>
             </form>
         </div>

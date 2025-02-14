@@ -32,25 +32,44 @@ app.get("/api",(req,res)=>{
     res.status(200).json({msg:"api endpoint"});
 });
 
+const defaultPrompt =
+`please return a json object only, with no other narrative, that has all the extracted fields
+and values, and include these top-level properties:
+- "organization",  that has the name of the organization. If not clearly evident, it usually can be inferred from "pay to the order" field
+- "finalAmount", a number that is the final amount due for this invoice`;
+
+const extractJsonOrText = (msg)=>{
+    let result = "";
+    try{
+        result = JSON.parse(msg);
+    } catch(e) {
+        result = {
+            narrative: msg
+        }
+    }
+    return result;
+}
+
 app.post("/submit", upload.single("invoice"), async (req,res)=>{
     console.log(`/SUBMIT`);
     if(!req.file){
         return res.status(400).json({ error: "no file uploaded"});
     }
     let resp = {};
-
+    const analysisRequest = req.body.imageQuestion || defaultPrompt;
     try {
         // Send image to anthropic
         console.log(`Sending to Anthropic`)
-        billTermsJson  = await analyze(req.file.path);
+        billTermsJson  = await analyze(req.file.path, analysisRequest);
         console.log(`Parsing return values...`)
-        billTerms = JSON.parse(billTermsJson);
+        billTerms = extractJsonOrText(billTermsJson);
         resp = {
             status: "forms processed",
             originalName: req.file.originalname,
             file: req.file,
-            billTerms
         };
+        if(billTerms.narrative) resp = {...resp, narrative:billTerms.narrative}
+        else resp = {...resp,billTerms}
         console.log(`Full data return: ${jss(resp,1)}`)
     } catch(e) {
         console.log(`Exception in Anthropic: ${e}`);
@@ -66,17 +85,13 @@ const showTextResults = (results)=> {
     return responseString;
 }
 
-const analyze = async(billImage)=>{
+const analyze = async(billImage, question="")=>{
     const apiKey = process.env.ANTHROPIC_API_KEY;
 
-    const optionalQuestion =
-    `please return a json object only, with no other narrative, that has all the extracted fields
-    and values, and include these top-level properties:
-    - "organization",  that has the name of the organization. If not clearly evident, it usually can be inferred from "pay to the order" field
-    - "finalAmount", a number that is the final amount due for this invoice`;
+    const askClaude = question != "" ? question : "Describe the invoice"
     console.log(`Submitting Invoice: ${billImage}`)
     console.log(`using Claude model: ${claudeModel}`)
-    const response = await submitImageToAnthropic(billImage,apiKey,optionalQuestion)
+    const response = await submitImageToAnthropic(billImage,apiKey,askClaude)
     const billDataStr = response.content[0].text
     console.log(`The Bill data is: ${showTextResults(response)}`);
     return billDataStr;
