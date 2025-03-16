@@ -4,31 +4,43 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <title>Anthropic</title>
         <link rel="stylesheet" href="./styles.css">
+        <script type="text/javascript" src="./services.js"></script>
     </head>
-    <body>
-        <h2>Claude-AI from Anthropic</h2>
+    <body onload="onLoad()" unload="onUnload()"">
+        <h2>AI ETL by Claude</h2>
         <div class="container">
-            <form action="/submit" enctype="multipart/form-data" method="post">
-                <div class="field">
-                    <label for="fname">Invoice Image File</label>
-                    <input type="file" id="fname" name="invoice">
-                </div>
-                <div class="field">
-                    <label for="imageQuestion">Question for Claude-AI</label>
-                    <textarea name="imageQuestion" cols="64" rows="15">
-If this image is an invoice, statement, or form related to finances, please return a json object only, with no other narrative,that includes:
+            <div class="field">
+                <label for="fname">Invoice Image File</label>
+                <input type="file" id="fname" name="invoice">
+                <span class="note">Supported formats: JPG, PNG, GIF, PDF</span>
+            </div>
+            <div class="field">
+                <label for="invoicearea">Question for Claude-AI</label>
+                <div class="invoicearea">
+                    <textarea id="imageQuestion" name="imageQuestion" cols="64" rows="15">
+You will be extracting all fields from an image of an invoice, statement, or form related to finances.
+It is possible that the image may be part of a PDF file.
+The extracted data shall be formatted as a true JSON object, without prepending "json".
+If a field's value cannot be interpreted, set its value to "?--?"
+Please add these fields as the first properties in your response JSON object:
 - "organization",  that has the name of the organization. If not clearly evident, it usually can be inferred from "pay to the order" field
 - "finalAmount", a number that is the final amount due for this invoice.
 - "formType", a string describing the type of statement,
 - all the extracted fields and values
-For any other image please return a json object with one property, "narrative" the describes the image.
+For any other image please return a json object with one property, "narrative" that describes the image.
                     </textarea>
+                    <img name="invimg" class="invimg" id="image" src="">
                 </div>
-                <div class="field">
-                    <label for="submit">Analyze</label>
-                    <input type="submit" name="submit" value="Send to Claude"/>
-                </div>
-            </form>
+            </div>
+            <div class="field">
+                <label for="submit">Analyze</label>
+                <button name="submit" id="submit" onclick="sendInvoice()">Send to Claude</button>
+            </div>
+            <div class="field">
+                <label for="results">Results</label>
+                <textarea name="results" id="results" cols="64" rows="8" readonly></textarea>
+            </div>
         </div>
+        <span class="cw">(c)2025 Glenn Inn,  glenninn@yahoo.com</span>
     </body>
 </html>
