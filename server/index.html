@@ -33,8 +33,11 @@ For any other image please return a json object with one property, "narrative" t
                 </div>
             </div>
             <div class="field">
-                <label for="submit">Analyze</label>
-                <button name="submit" id="submit" onclick="sendInvoice()">Send to Claude</button>
+                <label for="submit">Operations</label>
+                <div class="operations">
+                    <button name="submit" id="submit" onclick="sendInvoice()">Send to Claude</button>
+                    <button id="saveresults" onclick="saveResults()">Download</button>
+                </div>
             </div>
             <div class="field">
                 <label for="results">Results</label>

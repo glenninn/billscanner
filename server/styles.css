@@ -20,6 +20,12 @@
     flex-direction: column;
 }
 
+.operations {
+    display: flex;
+    flex-direction: row;
+    gap: 10px;
+}
+
 #fname {
     color:whte;
     display: flex;
