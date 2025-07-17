@@ -27,8 +27,10 @@ It is assumed that you have correctly configured Heroku's environment, and that 
 Simply open your browser and visit the heroku instance-name.
 
 ## Web Client Session
-The web client is a simple HTML/CSS/JS client that allows you to submit an image/pdf file of an invoice, and then to send it to the cloud for analysis and extraction of data.  After the AI engine extracts the data
+The web client is a simple HTML/CSS/JS client that allows you to submit an invoice image/pdf file to the cloud for analysis and extraction of data.  The Webserver then returns the extracted data in JSON.
 
-1.  the results are shown to you, and
-2.  you have the option to download the data in to a JSON file
-3.  
+Follow these steps:
+1.  Click on the `Browse` button to select the invoice image file
+2.  Click on the `Send to Claude` button to begin the analysis and extraction.  It may take a few seconds for this to complete.  The results will populate in the `Results` section
+3.  If you wish, you can download as a JSON file, the extracted data.  Simply click on the `Download` button
+   
